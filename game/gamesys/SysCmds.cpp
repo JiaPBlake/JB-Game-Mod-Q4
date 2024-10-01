@@ -2930,6 +2930,18 @@ void Cmd_ToggleBuyMenu_f( const idCmdArgs& args ) {
 	}
 }
 
+
+//J START Cmd_Locate_f
+void Cmd_Locate_f(const idCmdArgs& args) 
+{
+	idVec3 position;
+	idPlayer* player = gameLocal.GetLocalPlayer();
+	if (!player) return;
+	position = player->GetEyePosition();
+	common->Printf("Player is at (%f,%f,%f)\n", position.x, position.y, position.z);
+}
+//J END
+
 void Cmd_BuyItem_f( const idCmdArgs& args ) {
 	idPlayer* player = gameLocal.GetLocalPlayer();
 	if ( !player ) {
@@ -3232,7 +3244,11 @@ void idGameLocal::InitConsoleCommands( void ) {
 	cmdSystem->AddCommand( "buyMenu",				Cmd_ToggleBuyMenu_f,		CMD_FL_GAME,				"Toggle buy menu (if in a buy zone and the game type supports it)" );
 	cmdSystem->AddCommand( "buy",					Cmd_BuyItem_f,				CMD_FL_GAME,				"Buy an item (if in a buy zone and the game type supports it)" );
 // RITUAL END
-
+//J START   = the command we made in class 9/17/24
+	cmdSystem->AddCommand("locate",					Cmd_Locate_f,				CMD_FL_GAME,	"Locate f");
+//he said he'd show us how to execute this command at the press of a button (hotkey)
+	
+//J END
 }
 
 /*

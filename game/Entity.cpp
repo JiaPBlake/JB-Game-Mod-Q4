@@ -3631,12 +3631,17 @@ inflictor, attacker, dir, and point can be NULL for environmental effects
 */
 void idEntity::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &dir, 
 					  const char *damageDefName, const float damageScale, const int location ) {
+	//J START
+	//gameLocal.Printf("Entity is about to take damage. By: '%s'\n", inflictor->GetEntityDefName());
+	//J END
 	if ( forwardDamageEnt.IsValid() ) {
+		gameLocal.Printf("Forward damage is valid.");
 		forwardDamageEnt->Damage( inflictor, attacker, dir, damageDefName, damageScale, location );
 		return;
 	}
 
 	if ( !fl.takedamage ) {
+		//gameLocal.Printf("fl did not take damage\n");
 		return;
 	}
 
@@ -3655,18 +3660,34 @@ void idEntity::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &di
 
 	int	damage = damageDef->GetInt( "damage" );
 
+	//This block of code happens ONCE when hitting naturally spawned enemies.
+	//But then some floor takes more damage after that, a couple times.
+
 	// inform the attacker that they hit someone
 	attacker->DamageFeedback( this, inflictor, damage );
-	if ( damage ) {
+//J START - IF the inflictor is a rocket levitate.  Else,  do the damage
+	gameLocal.Printf("Projectile's EntityDef Name: %s'\n", inflictor->GetEntityDefName());
+	gameLocal.Printf("Person who killed the target: %s'\n", attacker->GetEntityDefName());
+	gameLocal.Printf("Target's EntityDef Name: %s'\n\n", this->GetEntityDefName());
+	//attacker->GetEntityDefName   will be player_marine
+	const char* rocketref = inflictor->GetEntityDefName();
+	if (rocketref == "projectile_rocket") {
+//J ok.....   so for some reason this just never works.  like this if conditional is literally just never satisfied
+		gameLocal.Printf("\nWe did damage with a: '%s', to a '%s'\n", inflictor->GetEntityDefName(), this->GetEntityDefName());
+		health += damage;
+	}
+//J END
+	else if ( damage && inflictor->GetEntityDefName() != "projectile_rocket") {
+		gameLocal.Printf("Why the fuck are we doing damage? '%s'\n", inflictor->GetEntityDefName());
 		// do the damage
 		//jshepard: this is kinda important, no?
 		health -= damage;
-
+//J START: This is.  NOT the function that damages entities when I fire a rocket launcher.
 		if ( health <= 0 ) {
 			if ( health < -999 ) {
 				health = -999;
 			}
-
+			//J START -  child function could be called :||
 			Killed( inflictor, attacker, damage, dir, location );
 		} else {
 			Pain( inflictor, attacker, damage, dir, location );

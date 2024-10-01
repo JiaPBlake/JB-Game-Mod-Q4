@@ -735,6 +735,7 @@ bool idProjectile::Collide( const trace_t &collision, const idVec3 &velocity, bo
 
 	// Can the projectile damage?  
 	canDamage = ent->fl.takedamage && !(( collision.c.material != NULL ) && ( collision.c.material->GetSurfaceFlags() & SURF_NODAMAGE ));
+//J Sept21/'24 -  Maybe I can add one more condition to this.  As long as the Weapon's type is not a Rocket Launcher..?
   
  	// direction of projectile
  	dir = velocity;
@@ -932,7 +933,7 @@ bool idProjectile::Collide( const trace_t &collision, const idVec3 &velocity, bo
 		return true;
 	}
 
-	Explode( &collision, false, ignore );
+	//Explode( &collision, false, ignore );
 
 	return true;
 }
@@ -1057,6 +1058,7 @@ idProjectile::Killed
 ================
 */
 void idProjectile::Killed( idEntity *inflictor, idEntity *attacker, int damage, const idVec3 &dir, int location ) {
+	gameLocal.Printf("Projectile just exploded by inflictor: '%s'\n", inflictor->GetEntityDefName());
 	if ( spawnArgs.GetBool( "detonate_on_death" ) ) {
 		Explode( NULL, true );
 		physicsObj.ClearContacts();

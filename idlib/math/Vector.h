@@ -31,8 +31,8 @@ public:
 	float			x;
 	float			y;
 
-					idVec2( void );
-					explicit idVec2( const float x, const float y );
+					idVec2( void );	//J: hii :) this is the constructor, in case you forget
+					explicit idVec2( const float x, const float y );  //this is an explicit constructor
 
 	void 			Set( const float x, const float y );
 	void			Zero( void );

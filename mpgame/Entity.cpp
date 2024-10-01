@@ -3632,8 +3632,14 @@ inflictor, attacker, dir, and point can be NULL for environmental effects
 
 ============
 */
+
+//J START -  MULTIPLAYER Damage function
+//J START -
+
 void idEntity::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &dir, 
 					  const char *damageDefName, const float damageScale, const int location ) {
+	
+	//gameLocal.Printf("WE'RE IN THE OTHER DAMAGE FUNCTIONS. By: '%s'\n", inflictor->GetEntityDefName());
 	if ( forwardDamageEnt.IsValid() ) {
 		forwardDamageEnt->Damage( inflictor, attacker, dir, damageDefName, damageScale, location );
 		return;

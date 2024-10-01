@@ -2380,6 +2380,9 @@ calls Damage()
 */
 void idActor::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &dir, 
 					  const char *damageDefName, const float damageScale, const int location ) {
+	//J START
+	gameLocal.Printf("ACTOR %s is about to take damage. By: '%s'\n", this->GetEntityDefName(), inflictor->GetEntityDefName());
+	//J END
 	if ( !fl.takedamage ) {
 		return;
 	}
@@ -2397,6 +2400,14 @@ void idActor::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &dir
 	}
 
 	int	damage = damageDef->GetInt( "damage" ) * damageScale;
+	//J START
+	gameLocal.Printf("ACTOR %s DAMAGED. By: '%s'\n", this->GetEntityDefName(), inflictor->GetEntityDefName());
+	
+	//HOLDDDDD UP!!  I snatched this from the Start RagDoll function :DDD
+	GetPhysics()->SetOrigin(GetPhysics()->GetOrigin() + GetPhysics()->GetGravityNormal() * -300.0f);
+	//GetPhysics()->ApplyImpulse(0, center, -0.5f * GetPhysics()->GetMass() * MS2SEC(gameLocal.GetMSec()) * GetPhysics()->GetGravity());
+
+	//J END
 	damage = GetDamageForLocation( damage, location );
 
 	// friendly fire damage

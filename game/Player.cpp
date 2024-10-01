@@ -9506,6 +9506,8 @@ void idPlayer::Think( void ) {
 
 	Move();
 
+	//J START -- he's adding the poisonTTL tick down (decrement) here. So that whenever we move we edcrease that timer
+
 	if ( !g_stopTime.GetBool() ) {
  		if ( !noclip && !spectating && ( health > 0 ) && !IsHidden() ) {
  			TouchTriggers();

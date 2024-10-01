@@ -1154,6 +1154,8 @@ private:
 	stateResult_t			State_Legs_Land					( const stateParms_t& parms );
 	stateResult_t			State_Legs_Dead					( const stateParms_t& parms );
 	
+	//J START -- he defined his poison variables here. 'cause like he said, put new stuff at the end
+
  	CLASS_STATES_PROTOTYPE( idPlayer );
 };
 
