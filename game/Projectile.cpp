@@ -735,7 +735,7 @@ bool idProjectile::Collide( const trace_t &collision, const idVec3 &velocity, bo
 
 	// Can the projectile damage?  
 	canDamage = ent->fl.takedamage && !(( collision.c.material != NULL ) && ( collision.c.material->GetSurfaceFlags() & SURF_NODAMAGE ));
-//J Sept21/'24 -  Maybe I can add one more condition to this.  As long as the Weapon's type is not a Rocket Launcher..?
+//J NOTE Sept21/'24 -  Maybe I can add one more condition to this.  As long as the Weapon's type is not a Rocket Launcher..?
   
  	// direction of projectile
  	dir = velocity;
@@ -838,6 +838,7 @@ bool idProjectile::Collide( const trace_t &collision, const idVec3 &velocity, bo
 			}
 			return false;		
 		}
+		//end of bounce.
 	}
 
 	SetOrigin( collision.endpos );
@@ -892,7 +893,23 @@ bool idProjectile::Collide( const trace_t &collision, const idVec3 &velocity, bo
 				}
 			}	
 // RAVEN END
- 			ent->Damage( this, owner, dir, damageDefName, damagePower, hitJoint );
+	//J START
+			//projectileFlags.detonate_on_actor
+			gameLocal.Printf("ENTDefName %s is soon going to take damage. By: '%s'\n", ent->GetEntityDefName(), this->GetEntityDefName());
+			//Don't need this anymore   idVec3 currentOri = ent->GetPhysics()->GetOrigin();
+			//Don't need this anymore   gameLocal.Printf("CurrentOrigin is a vector with x: '%d', y: '%d', z: '%d',\n", currentOri.x, currentOri.y, currentOri.z);
+
+//GREAT NEPTUNE IT WORKS!!!!!!!!!!	
+			if (spawnArgs.GetBool("levitate_on_hit")) {
+				gameLocal.Printf("IN IF CONDITIONAL");
+				ent->GetPhysics()->SetOrigin(ent->GetPhysics()->GetOrigin() + ent->GetPhysics()->GetGravityNormal() * -300.0f);
+			}
+			//Don't need this anymore   idVec3 newOr = ent->GetPhysics()->GetOrigin();
+			//Don't need this anymore   gameLocal.Printf("NewOrigin IS a vector with x: '%d', y: '%d', z: '%d',\n\n", newOr.x, newOr.y, newOr.z);
+			//The number is not changing  :|  in EITHER of them.
+
+	//J END	
+			ent->Damage( this, owner, dir, damageDefName, damagePower, hitJoint );
 			
 			if( owner && owner->IsType( idPlayer::GetClassType() ) && ent->IsType( idActor::GetClassType() ) ) {
 				statManager->WeaponHit( (const idActor*)(owner.GetEntity()), ent, methodOfDeath, hitCount == 0 );			
