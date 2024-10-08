@@ -901,7 +901,7 @@ bool idProjectile::Collide( const trace_t &collision, const idVec3 &velocity, bo
 
 //GREAT NEPTUNE IT WORKS!!!!!!!!!!	
 			if (spawnArgs.GetBool("levitate_on_hit")) {
-				gameLocal.Printf("IN IF CONDITIONAL");
+				//gameLocal.Printf("IN IF CONDITIONAL\n");
 				ent->GetPhysics()->SetOrigin(ent->GetPhysics()->GetOrigin() + ent->GetPhysics()->GetGravityNormal() * -300.0f);
 			}
 			//Don't need this anymore   idVec3 newOr = ent->GetPhysics()->GetOrigin();
