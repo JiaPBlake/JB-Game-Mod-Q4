@@ -3635,7 +3635,6 @@ void idEntity::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &di
 	//gameLocal.Printf("Entity is about to take damage. By: '%s'\n", inflictor->GetEntityDefName());
 //J END
 	if ( forwardDamageEnt.IsValid() ) {
-		gameLocal.Printf("Forward damage is valid.");
 		forwardDamageEnt->Damage( inflictor, attacker, dir, damageDefName, damageScale, location );
 		return;
 	}
@@ -3660,11 +3659,9 @@ void idEntity::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &di
 
 	int	damage = damageDef->GetInt( "damage" );
 
-//This block of code happens ONCE when hitting naturally spawned enemies.
-	//But then some floor takes more damage after that, a couple times.
-
 	// inform the attacker that they hit someone
 	attacker->DamageFeedback( this, inflictor, damage );
+
 //J START - IF the inflictor is a rocket levitate.  Else,  do the damage
 	//Don't need this anymore   gameLocal.Printf("Projectile's EntityDef Name: %s'\n", inflictor->GetEntityDefName());
 	//Don't need this anymore   gameLocal.Printf("Person who fired the Proj & Killed target: %s'\n", attacker->GetEntityDefName());
@@ -3672,24 +3669,23 @@ void idEntity::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &di
 	//attacker->GetEntityDefName   will be player_marine
 	const char* rocketref = inflictor->GetEntityDefName();
 
-	if (rocketref == "projectile_rocket") {
-//J NOTE ok.....   so for some reason this just never works.  like this if conditional is literally just never satisfied
+//HAHAAAA STRING COMPARISON FUNCTION!!  and it works. this if conditional carries out
+	if ( idStr::Cmp(rocketref, "projectile_rocket") == 0 ) {
 		gameLocal.Printf("\nWe did damage with a: '%s', to a '%s'\n", inflictor->GetEntityDefName(), this->GetEntityDefName());
 		health += damage;
 	}
 //J END
-	else if ( damage && inflictor->GetEntityDefName() != "projectile_rocket") {
-		gameLocal.Printf("Why the fuck are we doing damage? '%s'\n", inflictor->GetEntityDefName());
+	else if ( damage ) {
 		// do the damage
 		//jshepard: this is kinda important, no?
 		health -= damage;
-//J START: This is.  NOT the function that damages entities when I fire a rocket launcher.
-		// -cause I was tryna increase their health and they just kept dying. Probably an Explode() function or smth
+//J NOTE: This is.  NOT the function that damages entities when I fire a rocket launcher.
+	// -cause I was tryna increase their health and they just kept dying. Probably an Explode() function or smth
 		if ( health <= 0 ) {
 			if ( health < -999 ) {
 				health = -999;
 			}
-			//J START -  child function could be called :||
+			//J NOTE -  child function could be called :||
 			Killed( inflictor, attacker, damage, dir, location );
 		} else {
 			Pain( inflictor, attacker, damage, dir, location );

@@ -900,10 +900,10 @@ bool idProjectile::Collide( const trace_t &collision, const idVec3 &velocity, bo
 			//Don't need this anymore   gameLocal.Printf("CurrentOrigin is a vector with x: '%d', y: '%d', z: '%d',\n", currentOri.x, currentOri.y, currentOri.z);
 
 //GREAT NEPTUNE IT WORKS!!!!!!!!!!	
-			if (spawnArgs.GetBool("levitate_on_hit")) {
+//			if (spawnArgs.GetBool("levitate_on_hit")) {
 				//gameLocal.Printf("IN IF CONDITIONAL\n");
-				ent->GetPhysics()->SetOrigin(ent->GetPhysics()->GetOrigin() + ent->GetPhysics()->GetGravityNormal() * -300.0f);
-			}
+//				ent->GetPhysics()->SetOrigin(ent->GetPhysics()->GetOrigin() + ent->GetPhysics()->GetGravityNormal() * -300.0f);
+//			}
 			//Don't need this anymore   idVec3 newOr = ent->GetPhysics()->GetOrigin();
 			//Don't need this anymore   gameLocal.Printf("NewOrigin IS a vector with x: '%d', y: '%d', z: '%d',\n\n", newOr.x, newOr.y, newOr.z);
 			//The number is not changing  :|  in EITHER of them.
@@ -950,7 +950,7 @@ bool idProjectile::Collide( const trace_t &collision, const idVec3 &velocity, bo
 		return true;
 	}
 
-	//Explode( &collision, false, ignore );
+	Explode( &collision, false, ignore );
 
 	return true;
 }
