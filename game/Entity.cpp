@@ -3632,7 +3632,7 @@ inflictor, attacker, dir, and point can be NULL for environmental effects
 void idEntity::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &dir, 
 					  const char *damageDefName, const float damageScale, const int location ) {
 //J START
-	//gameLocal.Printf("Entity is about to take damage. By: '%s'\n", inflictor->GetEntityDefName());
+	gameLocal.Printf("ENTITY Dmg ; Entity^ is about to take damage FROM: '%s'\n", inflictor->GetEntityDefName());
 //J END
 	if ( forwardDamageEnt.IsValid() ) {
 		forwardDamageEnt->Damage( inflictor, attacker, dir, damageDefName, damageScale, location );
@@ -3659,6 +3659,8 @@ void idEntity::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &di
 
 	int	damage = damageDef->GetInt( "damage" );
 
+	bool turn = false;
+	int ranNum = rand() % 2;
 	// inform the attacker that they hit someone
 	attacker->DamageFeedback( this, inflictor, damage );
 
@@ -3675,22 +3677,26 @@ void idEntity::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &di
 		health += damage;
 	}
 //J END
-	else if ( damage ) {
-		// do the damage
-		//jshepard: this is kinda important, no?
-		health -= damage;
-//J NOTE: This is.  NOT the function that damages entities when I fire a rocket launcher.
-	// -cause I was tryna increase their health and they just kept dying. Probably an Explode() function or smth
-		if ( health <= 0 ) {
-			if ( health < -999 ) {
-				health = -999;
+	else if (turn) {
+		if (damage) {
+			// do the damage
+			//jshepard: this is kinda important, no?
+			health -= damage;
+			//J NOTE: This is.  NOT the function that damages entities when I fire a rocket launcher.
+				// -cause I was tryna increase their health and they just kept dying. Probably an Explode() function or smth
+			if (health <= 0) {
+				if (health < -999) {
+					health = -999;
+				}
+				//J NOTE -  child function could be called :||
+				Killed(inflictor, attacker, damage, dir, location);
 			}
-			//J NOTE -  child function could be called :||
-			Killed( inflictor, attacker, damage, dir, location );
-		} else {
-			Pain( inflictor, attacker, damage, dir, location );
+			else {
+				Pain(inflictor, attacker, damage, dir, location);
+			}
 		}
 	}
+		gameLocal.Printf("We are at the end of Entity's Damage() if. RanNum is: %d\n", ranNum);
 }
 
 /*

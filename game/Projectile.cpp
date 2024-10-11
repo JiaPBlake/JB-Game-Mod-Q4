@@ -873,29 +873,32 @@ bool idProjectile::Collide( const trace_t &collision, const idVec3 &velocity, bo
 	// if the hit entity takes damage
 	if ( canDamage ) {
 
- 		if ( damageDefName[0] != '\0' ) {
+		if (damageDefName[0] != '\0') {
 			idVec3 dir = velocity;
 			dir.Normalize();
-// RAVEN BEGIN
-// jdischler: code from the 'other' project..to ensure that if an attached head is hit, the body will use the head joint
-//	otherwise damage zones for head attachments no-worky
+			// RAVEN BEGIN
+			// jdischler: code from the 'other' project..to ensure that if an attached head is hit, the body will use the head joint
+			//	otherwise damage zones for head attachments no-worky
 			int hitJoint = CLIPMODEL_ID_TO_JOINT_HANDLE(collision.c.id);
-			if ( ent->IsType(idActor::GetClassType()) )
+			if (ent->IsType(idActor::GetClassType()))
 			{
 				idActor* entActor = static_cast<idActor*>(ent);
-				if ( entActor && entActor->GetHead() && entActor->GetHead()->IsType(idAFAttachment::GetClassType()) )
+				if (entActor && entActor->GetHead() && entActor->GetHead()->IsType(idAFAttachment::GetClassType()))
 				{
 					idAFAttachment* headEnt = static_cast<idAFAttachment*>(entActor->GetHead());
-					if ( headEnt && headEnt->entityNumber == collision.c.entityNum )
+					if (headEnt && headEnt->entityNumber == collision.c.entityNum)
 					{//hit ent's head, get the proper joint for the head
 						hitJoint = entActor->GetAnimator()->GetJointHandle("head");
 					}
 				}
-			}	
-// RAVEN END
-	//J START
-			//projectileFlags.detonate_on_actor
-			gameLocal.Printf("ENTDefName %s is soon going to take damage. By: '%s'\n", ent->GetEntityDefName(), this->GetEntityDefName());
+			}
+			// RAVEN END
+				//J START
+						//projectileFlags.detonate_on_actor
+			bool turn = false;
+			int ranNum = rand() % 2;
+			gameLocal.Printf("\nPROJECTILE dmg EntDefName: %s is soon going to take damage. By: '%s'\n", ent->GetEntityDefName(), this->GetEntityDefName());
+//			if (turn){
 			//Don't need this anymore   idVec3 currentOri = ent->GetPhysics()->GetOrigin();
 			//Don't need this anymore   gameLocal.Printf("CurrentOrigin is a vector with x: '%d', y: '%d', z: '%d',\n", currentOri.x, currentOri.y, currentOri.z);
 
@@ -909,12 +912,13 @@ bool idProjectile::Collide( const trace_t &collision, const idVec3 &velocity, bo
 			//The number is not changing  :|  in EITHER of them.
 
 	//J END	
-			ent->Damage( this, owner, dir, damageDefName, damagePower, hitJoint );
-			
-			if( owner && owner->IsType( idPlayer::GetClassType() ) && ent->IsType( idActor::GetClassType() ) ) {
-				statManager->WeaponHit( (const idActor*)(owner.GetEntity()), ent, methodOfDeath, hitCount == 0 );			
+			ent->Damage(this, owner, dir, damageDefName, damagePower, hitJoint);
+
+			if (owner && owner->IsType(idPlayer::GetClassType()) && ent->IsType(idActor::GetClassType())) {
+				statManager->WeaponHit((const idActor*)(owner.GetEntity()), ent, methodOfDeath, hitCount == 0);
 				hitCount++;
 			}
+//			}
 		}
 	}
 	

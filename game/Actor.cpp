@@ -2381,7 +2381,7 @@ calls Damage()
 void idActor::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &dir, 
 					  const char *damageDefName, const float damageScale, const int location ) {
 //J START
-	//gameLocal.Printf("ACTOR %s is about to take damage. By: '%s'\n", this->GetEntityDefName(), inflictor->GetEntityDefName());
+	gameLocal.Printf("ACTOR Dmg ; Actor %s is about to take damage. By: '%s'\n", this->GetEntityDefName(), inflictor->GetEntityDefName());
 //J END
 	if ( !fl.takedamage ) {
 		return;
@@ -2413,7 +2413,14 @@ void idActor::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &dir
 //	GetPhysics()->SetOrigin(GetPhysics()->GetOrigin() + GetPhysics()->GetGravityNormal() * -300.0f);
 	//GetPhysics()->ApplyImpulse(0, center, -0.5f * GetPhysics()->GetMass() * MS2SEC(gameLocal.GetMSec()) * GetPhysics()->GetGravity());
 
+
+
+	bool turn = false;
+	int ranNum = rand() % 2;
+
+//	if (turn){
 //J END
+
 	damage = GetDamageForLocation( damage, location );
 
 	// friendly fire damage
@@ -2559,6 +2566,9 @@ void idActor::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &dir
 		}
 		*/
 	}
+
+
+//	} //J END Turn if
 }
 
 /*
