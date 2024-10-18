@@ -1083,6 +1083,9 @@ idPlayer::idPlayer() {
 
 	doInitWeapon			= false;
 	noclip					= false;
+	//J START
+	turn					= false;
+	//J END
 	godmode					= false;
 	undying					= g_forceUndying.GetBool() ? !gameLocal.isMultiplayer : false;
 
@@ -1499,6 +1502,9 @@ void idPlayer::Init( void ) {
 	const char			*value;
 	
 	noclip					= false;
+	//J START
+	turn					= false;
+	//J END
 	godmode					= false;
 	godmodeDamage			= 0;
 	undying					= g_forceUndying.GetBool() ? !gameLocal.isMultiplayer : false;
@@ -3980,50 +3986,58 @@ void idPlayer::FireWeapon( void ) {
 		gameLocal.editEntities->SelectEntity( muzzle, axis[0], this );	
 		return;
 	}
-
-	if ( !hiddenWeapon && weapon->IsReady() ) {
-		// cheap hack so in MP the LG isn't allowed to fire in the short lapse while it goes from Fire -> Idle before changing to another weapon
-		// this gimps the weapon a lil bit but is consistent with the visual feedback clients are getting since 1.0
-		bool noFireWhileSwitching = false;
-		noFireWhileSwitching = ( gameLocal.isMultiplayer && idealWeapon != currentWeapon && weapon->NoFireWhileSwitching() );
-		if ( !noFireWhileSwitching ) {
-			if ( weapon->AmmoInClip() || weapon->AmmoAvailable() ) {
-				pfl.attackHeld = true;
-				weapon->BeginAttack();
-			} else {
-				pfl.attackHeld = false;
-				pfl.weaponFired = false;
-				StopFiring();
-				NextBestWeapon();
+	//J START     for some reason I still can't see the model even if I put the IF here.
+	//the  if(turn) doesn't Show Weapon here
+		if (!hiddenWeapon && weapon->IsReady()) {
+			// cheap hack so in MP the LG isn't allowed to fire in the short lapse while it goes from Fire -> Idle before changing to another weapon
+			// this gimps the weapon a lil bit but is consistent with the visual feedback clients are getting since 1.0
+			bool noFireWhileSwitching = false;
+			noFireWhileSwitching = (gameLocal.isMultiplayer && idealWeapon != currentWeapon && weapon->NoFireWhileSwitching());
+			if (!noFireWhileSwitching) {
+				if (weapon->AmmoInClip() || weapon->AmmoAvailable()) {
+					pfl.attackHeld = true;
+					if (turn) {
+					weapon->BeginAttack();
+					} //J END  NEED turn here. 
+				}
+				else {
+					pfl.attackHeld = false;
+					pfl.weaponFired = false;
+					StopFiring();
+					NextBestWeapon();
+				}
 			}
-		} else {
-			StopFiring();
+			else {
+				StopFiring();
+			}
 		}
-	}
-	// If reloading when fire is hit cancel the reload
-	else if ( weapon->IsReloading() ) {
-		weapon->CancelReload();
-	}
-/* twhitaker: removed this at the request of Matt Vainio.
-	if ( !gameLocal.isMultiplayer ) {
-		if ( hud && tipUp ) {
-			HideTip();
+		// If reloading when fire is hit cancel the reload
+		else if (weapon->IsReloading()) {
+			weapon->CancelReload();
 		}
-		// may want to track with with a bool as well
-		// keep from looking up named events so often
-		if ( objectiveSystem && objectiveUp ) {
-			HideObjective();
+		/* twhitaker: removed this at the request of Matt Vainio.
+			if ( !gameLocal.isMultiplayer ) {
+				if ( hud && tipUp ) {
+					HideTip();
+				}
+				// may want to track with with a bool as well
+				// keep from looking up named events so often
+				if ( objectiveSystem && objectiveUp ) {
+					HideObjective();
+				}
+			}
+		*/
+		if (hud && weaponChangeIconsUp) {
+			//J NOTE -- if (turn) does nothing here.  As in, it also doesn't even show us our weapon. So the problem exists within Weapon's BeginAttack() function.
+			hud->HandleNamedEvent("weaponFire");
+			// nrausch: objectiveSystem does not necessarily exist (in mp it doesn't)
+			if (objectiveSystem) {
+				objectiveSystem->HandleNamedEvent("weaponFire");
+			}
+			weaponChangeIconsUp = false;
+			//} //J END
 		}
-	}
-*/
-	if( hud && weaponChangeIconsUp ) {
-		hud->HandleNamedEvent( "weaponFire" );
-		// nrausch: objectiveSystem does not necessarily exist (in mp it doesn't)
-		if ( objectiveSystem ) {
-			objectiveSystem->HandleNamedEvent( "weaponFire" );
-		}
-		weaponChangeIconsUp = false;
-	}
+	//J END
 }
 
 /*
@@ -6109,7 +6123,10 @@ void idPlayer::Weapon_Combat( void ) {
 	pfl.weaponFired = false;
  	if ( !influenceActive ) {
  		if ( ( usercmd.buttons & BUTTON_ATTACK ) && !weaponGone ) {
- 			FireWeapon();
+			//J START   This inhibits the weapon model from showing up
+			//if (turn) {
+				FireWeapon();
+			
  		} else if ( oldButtons & BUTTON_ATTACK ) {
  			pfl.attackHeld = false;
  			weapon->EndAttack();
@@ -14078,5 +14095,11 @@ int idPlayer::CanSelectWeapon(const char* weaponName)
 
 	return weaponNum;
 }
+
+//J START
+//bool idPlayer::SetTurn( bool turnVal ) 
+//{
+//	turn = turnVal;
+//}
 
 // RITUAL END

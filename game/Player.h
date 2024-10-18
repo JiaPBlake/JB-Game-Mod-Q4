@@ -288,6 +288,7 @@ public:
 
 	bool					alreadyDidTeamAnnouncerSound;
 	bool					noclip;
+	bool					turn;
 	bool					godmode;
 	int						godmodeDamage;
 	bool					undying;

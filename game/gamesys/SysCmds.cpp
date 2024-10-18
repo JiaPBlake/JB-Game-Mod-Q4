@@ -2924,7 +2924,7 @@ void Cmd_AddIcon_f( const idCmdArgs& args ) {
 // squirrel: Mode-agnostic buymenus
 void Cmd_ToggleBuyMenu_f( const idCmdArgs& args ) {
 	idPlayer* player = gameLocal.GetLocalPlayer();
-	if ( player && player->CanBuy() )
+	if ( player )
 	{
 		gameLocal.mpGame.OpenLocalBuyMenu();
 	}
@@ -2939,6 +2939,27 @@ void Cmd_Locate_f(const idCmdArgs& args)
 	if (!player) return;
 	position = player->GetEyePosition();
 	common->Printf("Player is at (%f,%f,%f)\n", position.x, position.y, position.z);
+}
+
+void Cmd_Turn_f(const idCmdArgs& args) {
+	char* msg;
+	idPlayer* player;
+
+	player = gameLocal.GetLocalPlayer();
+	if (!player || !gameLocal.CheatsOk()) {
+		return;
+	}
+
+	if (player->turn) {
+		msg = "Not your turn anymore\n";
+	}
+	else {
+		msg = "It is now your turn!\n";
+	}
+
+	player->turn = !player->turn;
+
+	gameLocal.Printf("%s Turn is: %d", msg, player->turn);
 }
 //J END
 
@@ -3246,6 +3267,7 @@ void idGameLocal::InitConsoleCommands( void ) {
 // RITUAL END
 //J START   = the command we made in class 9/17/24
 	cmdSystem->AddCommand("locate",					Cmd_Locate_f,				CMD_FL_GAME,	"Locate f");
+	cmdSystem->AddCommand("turn",					Cmd_Turn_f,					CMD_FL_GAME,	"Turn f");
 //he said he'd show us how to execute this command at the press of a button (hotkey)
 	
 //J END

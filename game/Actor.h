@@ -117,7 +117,7 @@ class idActor : public idAFEntity_Gibbable {
 public:
 	CLASS_PROTOTYPE( idActor );
 
-	int						team;
+	int						team;				// default 1 for monster_default.def   and default 0 for char_marine.def
 	idLinkList<idActor>		teamNode;
 	int						rank;				// monsters don't fight back if the attacker's rank is higher
 	idMat3					viewAxis;			// view axis of the actor
@@ -257,6 +257,12 @@ public:
 
 	int						lightningNextTime;
 	int						lightningEffects;
+
+	//J START
+	bool					turn;
+	void					SwapTurn				(  );
+	void					SetTeam					( int teamToSet );
+	//J END
 
 protected:
 	friend class			idAnimState;

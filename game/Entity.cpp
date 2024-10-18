@@ -3632,7 +3632,7 @@ inflictor, attacker, dir, and point can be NULL for environmental effects
 void idEntity::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &dir, 
 					  const char *damageDefName, const float damageScale, const int location ) {
 //J START
-	gameLocal.Printf("ENTITY Dmg ; Entity^ is about to take damage FROM: '%s'\n", inflictor->GetEntityDefName());
+	gameLocal.Printf("ENTITY Dmg ; Entity^ ('%s') is about to take damage FROM: '%s'\n", this->GetEntityDefName(), inflictor->GetEntityDefName());
 //J END
 	if ( forwardDamageEnt.IsValid() ) {
 		forwardDamageEnt->Damage( inflictor, attacker, dir, damageDefName, damageScale, location );
@@ -3673,30 +3673,28 @@ void idEntity::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &di
 
 //HAHAAAA STRING COMPARISON FUNCTION!!  and it works. this if conditional carries out
 	if ( idStr::Cmp(rocketref, "projectile_rocket") == 0 ) {
-		gameLocal.Printf("\nWe did damage with a: '%s', to a '%s'\n", inflictor->GetEntityDefName(), this->GetEntityDefName());
+		gameLocal.Printf("\n(ENTITY - ROCKET) We did damage with a: '%s', to a '%s'\n", inflictor->GetEntityDefName(), this->GetEntityDefName());
 		health += damage;
 	}
 //J END
-	else if (turn) {
-		if (damage) {
-			// do the damage
-			//jshepard: this is kinda important, no?
-			health -= damage;
-			//J NOTE: This is.  NOT the function that damages entities when I fire a rocket launcher.
-				// -cause I was tryna increase their health and they just kept dying. Probably an Explode() function or smth
-			if (health <= 0) {
-				if (health < -999) {
-					health = -999;
-				}
-				//J NOTE -  child function could be called :||
-				Killed(inflictor, attacker, damage, dir, location);
+	if (damage) {
+		// do the damage
+		//jshepard: this is kinda important, no?
+		health -= damage;
+		//J NOTE: This is.  NOT the function that damages entities when I fire a rocket launcher.
+			// -cause I was tryna increase their health and they just kept dying. Probably an Explode() function or smth
+		if (health <= 0) {
+			if (health < -999) {
+				health = -999;
 			}
-			else {
-				Pain(inflictor, attacker, damage, dir, location);
-			}
+			//J NOTE -  child function could be called :||
+			Killed(inflictor, attacker, damage, dir, location);
+		}
+		else {
+			Pain(inflictor, attacker, damage, dir, location);
 		}
 	}
-		gameLocal.Printf("We are at the end of Entity's Damage() if. RanNum is: %d\n", ranNum);
+//		gameLocal.Printf("We are at the end of Entity's Damage() if. RanNum is: %d\n", ranNum);
 }
 
 /*

@@ -2378,10 +2378,13 @@ Bleeding wounds and surface overlays are applied in the collision code that
 calls Damage()
 ============
 */
+
 void idActor::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &dir, 
 					  const char *damageDefName, const float damageScale, const int location ) {
 //J START
-	gameLocal.Printf("ACTOR Dmg ; Actor %s is about to take damage. By: '%s'\n", this->GetEntityDefName(), inflictor->GetEntityDefName());
+	bool turn = false;
+	int ranNum = rand() % 2;
+	gameLocal.Printf("\nACTOR Dmg ; Actor %s is about to take damage. By: '%s'.  RanNum is: %d\n", this->GetEntityDefName(), inflictor->GetEntityDefName(), ranNum);
 //J END
 	if ( !fl.takedamage ) {
 		return;
@@ -2413,12 +2416,7 @@ void idActor::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &dir
 //	GetPhysics()->SetOrigin(GetPhysics()->GetOrigin() + GetPhysics()->GetGravityNormal() * -300.0f);
 	//GetPhysics()->ApplyImpulse(0, center, -0.5f * GetPhysics()->GetMass() * MS2SEC(gameLocal.GetMSec()) * GetPhysics()->GetGravity());
 
-
-
-	bool turn = false;
-	int ranNum = rand() % 2;
-
-//	if (turn){
+//	if (turn){ //this works I think.
 //J END
 
 	damage = GetDamageForLocation( damage, location );
@@ -2570,6 +2568,18 @@ void idActor::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &dir
 
 //	} //J END Turn if
 }
+
+//J START:
+
+void idActor::SwapTurn( ) {
+	turn = !turn;
+}
+
+void idActor::SetTeam( int teamToSet) {
+	team = teamToSet;
+}
+
+
 
 /*
 =====================

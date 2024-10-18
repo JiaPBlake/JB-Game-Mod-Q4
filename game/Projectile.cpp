@@ -897,7 +897,7 @@ bool idProjectile::Collide( const trace_t &collision, const idVec3 &velocity, bo
 						//projectileFlags.detonate_on_actor
 			bool turn = false;
 			int ranNum = rand() % 2;
-			gameLocal.Printf("\nPROJECTILE dmg EntDefName: %s is soon going to take damage. By: '%s'\n", ent->GetEntityDefName(), this->GetEntityDefName());
+			gameLocal.Printf("\nPROJECTILE dmg EntDefName: %s is soon going to take damage. By PROJECTILE: '%s'\n", ent->GetEntityDefName(), this->GetEntityDefName());
 //			if (turn){
 			//Don't need this anymore   idVec3 currentOri = ent->GetPhysics()->GetOrigin();
 			//Don't need this anymore   gameLocal.Printf("CurrentOrigin is a vector with x: '%d', y: '%d', z: '%d',\n", currentOri.x, currentOri.y, currentOri.z);
@@ -911,8 +911,23 @@ bool idProjectile::Collide( const trace_t &collision, const idVec3 &velocity, bo
 			//Don't need this anymore   gameLocal.Printf("NewOrigin IS a vector with x: '%d', y: '%d', z: '%d',\n\n", newOr.x, newOr.y, newOr.z);
 			//The number is not changing  :|  in EITHER of them.
 
-	//J END	
-			ent->Damage(this, owner, dir, damageDefName, damagePower, hitJoint);
+	
+			//Highkey it might be better to put this entire block of code in the Actor.cpp Damage() function
+			if (idStr::Cmp(this->GetEntityDefName(), "projectile_grenade") == 0) { //ideally the Grenade wont' damage at all, but instead capture the mosnter
+				gameLocal.Printf("Grenade branch. Not doing damage. Switching the entity's team");
+				//I wanna disect this line of code from the Friendly Fire section of Actor.cpp's Damage() function
+				//if (attacker->IsType(idActor::Type) && static_cast<idActor*>(attacker)->team == team) {
+				if ( ent->IsType(idActor::GetClassType()) ) {  //if the entity is an Actor, print that actor's team
+					static_cast<idActor*>(ent)->SetTeam(0);
+					gameLocal.Printf("This actor's (%s) team is now: %d\n", ent->GetEntityDefName(), static_cast<idActor*>(ent)->team);
+				}
+			}
+			
+	
+			else {	//J END	
+				ent->Damage(this, owner, dir, damageDefName, damagePower, hitJoint);
+				gameLocal.Printf("Returned from PROJECTILES's ent->Damage() call. ent's DefClassName is: ' %s ' \n", ent->GetEntityDefClassName());
+			}
 
 			if (owner && owner->IsType(idPlayer::GetClassType()) && ent->IsType(idActor::GetClassType())) {
 				statManager->WeaponHit((const idActor*)(owner.GetEntity()), ent, methodOfDeath, hitCount == 0);
