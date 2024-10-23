@@ -405,9 +405,9 @@
 	"#str_107319"	"Objective to fail"
 	"#str_107320"	"Health Shard"
 	"#str_107321"	"Super Potion"         //Super Potion    WAS called: Small Health Pack
-	"#str_107322"	"Hyper Potion"         //Hyper Potion    WAS called: Large Health Pack
+	"#str_107322"	"Hyper Potion"         //Hyper Potion    WAS called: Large Health Pack   and I found a Large Health pack too
 	"#str_107323"	"Full Restore"	       //Full Restore    WAS called: Mega Health
-	"#str_107324"	"Revive"	       //Revive          WAS called: Armor Shard
+	"#str_107324"	"Revive"	       //Revive          WAS called: Armor Shard  which are in the Trenches after the small vest
 	"#str_107325"	"Max Revive"           //Max Revive      WAS called: Small Armor Vest
 	"#str_107326"	"Assault Vest"         //Assault Vest     WAS called: Large Armor Vest
 	"#str_107327"	"The Moderator"

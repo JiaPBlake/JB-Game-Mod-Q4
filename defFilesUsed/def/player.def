@@ -728,7 +728,7 @@ entityDef player_marine
 	"minRestoreHealth0"					"20"		// Minimum health when loading a game for skill level 0
 	"minRestoreHealth1"					"10"		// Minimum health when loading a game for skill level 1
 	// J START
-	"speed"								"10"
+	"speed"								"10"    //oh heck nah I'm not doing speed
 	// J END
 
 	// ammo

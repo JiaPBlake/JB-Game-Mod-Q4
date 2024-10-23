@@ -659,7 +659,7 @@ windowDef Desktop
 		{
 			rect	0,0,640,480
 			visible	1
-			background	"gfx/guis/mainmenu/PKM_bg_temp"
+			background	"gfx/guis/mainmenu/b1_dark"
 			matcolor	1,1,1,0
 		}
 		windowDef bg_temp3
@@ -1080,8 +1080,8 @@ windowDef Desktop
 				rect	36,184,193,23
 				visible	1
 				forecolor	1,1,1,0.8
-				text	"#str_200014"
-				textscale	.31
+				text	"New Trainer"
+				textscale	0.31
 				font	"fonts/marine"
 			}
 			windowDef new_t_b2
@@ -1089,8 +1089,8 @@ windowDef Desktop
 				rect	36,214,193,23
 				visible	1
 				forecolor	1,1,1,0.8
-				text	"#str_200015"
-				textscale	.31
+				text	"Adept Trainer"
+				textscale	0.31
 				font	"fonts/marine"
 			}
 			windowDef new_t_b3
@@ -1098,8 +1098,8 @@ windowDef Desktop
 				rect	36,244,193,23
 				visible	1
 				forecolor	1,1,1,0.8
-				text	"#str_200016"
-				textscale	.31
+				text	"Ash Ketchup"
+				textscale	0.31
 				font	"fonts/marine"
 			}
 			windowDef new_t_b4
@@ -1107,8 +1107,8 @@ windowDef Desktop
 				rect	36,274,193,23
 				visible	1
 				forecolor	1,1,1,0.8
-				text	"#str_200017"
-				textscale	.31
+				text	"Red"
+				textscale	0.31
 				font	"fonts/marine"
 			}
 			windowDef new_back
@@ -1923,29 +1923,29 @@ windowDef Desktop
 			}
 			windowDef mp_t_b2
 			{
-				rect	44,211,320,23
+				rect	44,211,450,23
 				visible	1
 				forecolor	1,1,1,0.8
-				text	"mp_t_b2"
-				textscale	0.31
+				text	"(Or. Pull up the Console with Ctrl + Alt + ~ and type 'give all')"
+				textscale	0.21
 				font	"fonts/marine"
 			}
 			windowDef mp_t_b3
 			{
-				rect	44,241,320,23
+				rect	44,241,400,23
 				visible	1
 				forecolor	1,1,1,0.8
-				text	"#str_200026"
-				textscale	.31
+				text	"noclip/walk to whatever spot you want"
+				textscale	0.31
 				font	"fonts/marine"
 			}
 			windowDef mp_t_b4
 			{
-				rect	44,271,320,23
+				rect	44,272,500,23
 				visible	1
 				forecolor	1,1,1,0.8
-				text	"#str_200009"
-				textscale	.31
+				text	"Start firin' Pokeballs at some monsters! Gotta catch 'em all!"
+				textscale	0.26
 				font	"fonts/marine"
 			}
 			windowDef mp_b1_corner
