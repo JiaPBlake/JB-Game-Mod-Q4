@@ -3677,7 +3677,7 @@ void idEntity::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &di
 
 //HAHAAAA STRING COMPARISON FUNCTION!!  and it works. this if conditional carries out
 	if ( idStr::Cmp(rocketref, "projectile_rocket") == 0 ) {
-		gameLocal.Printf("\n(ENTITY - ROCKET) We did damage with a: '%s', to a '%s'\n", inflictor->GetEntityDefName(), this->GetEntityDefName());
+		//gameLocal.Printf("\n(ENTITY - ROCKET) We did damage with a: '%s', to a '%s'\n", inflictor->GetEntityDefName(), this->GetEntityDefName());      //commented Sanity check
 		health += damage;
 	}
 //J END

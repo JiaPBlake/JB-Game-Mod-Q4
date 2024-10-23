@@ -895,8 +895,8 @@ bool idProjectile::Collide( const trace_t &collision, const idVec3 &velocity, bo
 			// RAVEN END
 				//J START
 						//projectileFlags.detonate_on_actor
-			bool turn = false;
-			int ranNum = rand() % 2;
+			bool turn = false; //I don't think this is used at all
+			//int ranNum = rand() % 2;
 			//gameLocal.Printf("\nPROJECTILE dmg EntDefName: %s is soon going to take damage. By PROJECTILE: '%s'\n", ent->GetEntityDefName(), this->GetEntityDefName());
 //			if (turn){
 			//Don't need this anymore   idVec3 currentOri = ent->GetPhysics()->GetOrigin();
@@ -914,7 +914,7 @@ bool idProjectile::Collide( const trace_t &collision, const idVec3 &velocity, bo
 	
 			//Highkey it might be better to put this entire block of code in the Actor.cpp Damage() function
 			if (idStr::Cmp(this->GetEntityDefName(), "projectile_grenade") == 0) { //ideally the Grenade wont' damage at all, but instead capture the mosnter
-				gameLocal.Printf("Grenade branch. Not doing damage. Switching the entity's team");
+				gameLocal.Printf("Pokeball thrown! Will it be captured?\n");
 				//I wanna disect this line of code from the Friendly Fire section of Actor.cpp's Damage() function
 				//if (attacker->IsType(idActor::Type) && static_cast<idActor*>(attacker)->team == team) {
 				if ( ent->IsType(idActor::GetClassType()) ) {  //if the entity is an Actor, print that actor's team
@@ -926,7 +926,8 @@ bool idProjectile::Collide( const trace_t &collision, const idVec3 &velocity, bo
 						//good lord idk how to make them follow me.  idk why I can't just call an AI function on an Actor;
 						//idPlayer* player = gameLocal.GetLocalPlayer();
 						//static_cast<idActor*>(ent)->SetLeader(static_cast<idEntity*>(player));
-						gameLocal.Printf("This actor's (%s) team is now: %d\n", ent->GetEntityDefName(), static_cast<idActor*>(ent)->team);
+						//gameLocal.Printf("This actor's (%s) team is now: %d\n", ent->GetEntityDefName(), static_cast<idActor*>(ent)->team);     //commented Sanity check
+						gameLocal.Printf("\nPokemon Successfully captured!\n");
 						//aiManager.AddTeammate(static_cast<idActor*>(ent));
 					}
 				}

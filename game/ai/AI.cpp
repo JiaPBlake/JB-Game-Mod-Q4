@@ -2476,7 +2476,7 @@ bool idAI::Attack ( const char* attackName, jointHandle_t joint, idEntity* targe
 	idActor* me = static_cast<idActor*>(this);
 	bool turnnn = me->GetTurn();
 	if (turnnn) {
-		gameLocal.Printf("\nIt's my turn. I am ATTACKING\n");
+		//gameLocal.Printf("\nIt's my turn. I am ATTACKING\n");        //commented Sanity check
 
 		// Melee Attack?
 		if (spawnArgs.GetBool(va("attack_%s_melee", attackName), "0")) {
@@ -2648,9 +2648,9 @@ idProjectile* idAI::AttackRanged (
 				CreateProjectile( attackDict, muzzleOrigin, dir );
 			}
 			lastProjectile = projectile.GetEntity();
-			gameLocal.Printf("LAUNCHING PROJECTILE  BECAUSE IT'S MY TURN\n");
+			//gameLocal.Printf("LAUNCHING PROJECTILE  BECAUSE IT'S MY TURN\n");    //commented Sanity check
 			lastProjectile->Launch( muzzleOrigin, dir, pushVelocity, 0.0f, combat.aggressiveScale );
-			gameLocal.Printf("Returned from launch\n");
+			//gameLocal.Printf("Returned from launch\n");    //commented Sanity check
 			// Let the script manage projectiles if need be
 			ExecScriptFunction ( funcs.launch_projectile, lastProjectile );
 		
@@ -2902,10 +2902,11 @@ bool idAI::AttackMelee ( const char *attackName, const idDict* meleeDict ) {
 	}
 
 	lastAttackTime = gameLocal.time;
+	//J START
 	idActor* me = static_cast<idActor*>(this);
 	me->SwapTurn();
-	gameLocal.Printf("Swapping turn\n");
-
+	//gameLocal.Printf("Swapping turn\n");    //commented Sanity check
+	//J END
 	return true;
 }
 

@@ -2443,8 +2443,8 @@ void idActor::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &dir
 
 	if (!turn){ // if it's  NOT my turn. I want to take damage. Otherwise, if it's my turn I should be dishing OUT damage.
 //J END
-		gameLocal.Printf("\nACTOR Dmg ; Actor %s is about to take damage. By: '%s'.  RanNum is: %d\n", this->GetEntityDefName(), inflictor->GetEntityDefName(), ranNum);
-		gameLocal.Printf("It's NOT my turn so I'm taking damage\n");
+		//gameLocal.Printf("\nACTOR Dmg ; Actor %s is about to take damage. By: '%s'.  RanNum is: %d\n", this->GetEntityDefName(), inflictor->GetEntityDefName(), ranNum);
+		//gameLocal.Printf("It's NOT my turn so I'm taking damage\n");     //commented Sanity check (s)
 
 	damage = GetDamageForLocation( damage, location );
 
@@ -2596,7 +2596,7 @@ void idActor::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &dir
 	} //J END Turn if
 	//Once I've TAKEN damage.   It should be my turn.
 	if (!turn) {
-		gameLocal.Printf("I took damage. My turn is true now\n");
+		//gameLocal.Printf("I took damage. My turn is true now\n");      //commented Sanity check
 		turn = true; //Look into the  CanHitEnemy  boolean function from  AI.h and AI.cpp
 	} //J END
 }
@@ -2619,7 +2619,7 @@ bool idActor::GetTurn( ) {
 
 void idActor::SetTurn(bool turnValue) {
 	turn = turnValue;
-	gameLocal.Printf("Actor's Turn should be set to false in Actor\n");
+	//gameLocal.Printf("Actor's Turn should be set to false in Actor\n");     //commented Sanity check
 }
 
 void idActor::SetTeam( int teamToSet) {

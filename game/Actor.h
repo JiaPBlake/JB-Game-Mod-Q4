@@ -261,7 +261,7 @@ public:
 	//J START
 	idEntityPtr<idActor>	leader;
 	bool					turn;
-	bool					wasEnemy;
+	bool					wasEnemy;				//J NOTE: unused I'm pretty sure
 	void					SetLeader				(idEntity* newLeader);
 	void					SwapTurn				(  );
 	bool					GetTurn					( );
