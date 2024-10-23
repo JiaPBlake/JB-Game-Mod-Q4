@@ -1084,7 +1084,7 @@ idPlayer::idPlayer() {
 	doInitWeapon			= false;
 	noclip					= false;
 	//J START
-	turn					= turn;
+	turn					= true;
 	//J END
 	godmode					= false;
 	undying					= g_forceUndying.GetBool() ? !gameLocal.isMultiplayer : false;
@@ -1503,7 +1503,7 @@ void idPlayer::Init( void ) {
 	
 	noclip					= false;
 	//J START
-	turn					= false;
+	turn					= true;
 	//J END
 	godmode					= false;
 	godmodeDamage			= 0;

@@ -1081,10 +1081,11 @@ void idAI::Event_AttackMelee( const char* meleeName ) {
 	bool turnnn = me->GetTurn();
 	if (turnnn) {
 		AttackMelee(meleeName, meleeDict);
+		//I have to EXPLICITLY set it to false here as opposed to Swapping it.
+		me->SetTurn(false);
+		gameLocal.Printf("Turn set to False in AI_events\n");
 	}
-	//I have to EXPLICITLY set it to false here as opposed to Swapping it.
-	me->SetTurn(false);
-	gameLocal.Printf("Turn set to False in AI_events\n");
+	
 }
 
 /*
