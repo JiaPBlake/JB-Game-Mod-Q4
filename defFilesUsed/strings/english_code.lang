@@ -404,36 +404,36 @@
 	"#str_107318"	"Fails a named objective, trigger it to fail the objective"
 	"#str_107319"	"Objective to fail"
 	"#str_107320"	"Health Shard"
-	"#str_107321"	"Hyper Potion" //Hyper Potion   WAS called: Small Health Pack
-	"#str_107322"	"Large Health Pack" //Full Revive   WAS called: Large Health Pack
-	"#str_107323"	"Mega Health"	//Full Restore    WAS called: Mega Health
-	"#str_107324"	"Armor Shard"
-	"#str_107325"	"Defense Pill"  //Defense Pill  WAS called: Small Armor Vest
-	"#str_107326"	"Large Armor Vest"  //Defense Pill XL WAS called: Large Armor Vest
+	"#str_107321"	"Super Potion"         //Super Potion    WAS called: Small Health Pack
+	"#str_107322"	"Hyper Potion"         //Hyper Potion    WAS called: Large Health Pack
+	"#str_107323"	"Full Restore"	       //Full Restore    WAS called: Mega Health
+	"#str_107324"	"Revive"	       //Revive          WAS called: Armor Shard
+	"#str_107325"	"Max Revive"           //Max Revive      WAS called: Small Armor Vest
+	"#str_107326"	"Assault Vest"         //Assault Vest     WAS called: Large Armor Vest
 	"#str_107327"	"The Moderator"
-	"#str_107328"	"Defense Pill"  //Defense Pill  WAS called: Small Armor Vest
-	"#str_107329"	"Large Armor Vest"  //Defense Pill XL WAS called: Large Armor Vest
+	"#str_107328"	"Max Revive"           //Max Revive      WAS called: Small Armor Vest
+	"#str_107329"	"Assault Vest"         //Assault Vest     WAS called: Large Armor Vest
 	
 	//weapons and goods
 	
 	"#str_107400"	"Blaster"
 	"#str_107401"	"Dark Matter Gun"	
 	"#str_107402"	"Gauntlet"
-	"#str_107403"	"Grenade Launcher"	
+	"#str_107403"	"Pokeball Launcher"    //Pokeball Launcher   WAS called: Grenade Launcher
 	"#str_107404"	"HyperBlaster"	
 	"#str_107405"	"Lightning Gun"
 	"#str_107406"	"Machinegun"
-	"#str_107407"	"Nailgun"
+	"#str_107407"	"Stat gun"
 	"#str_107408"	"Railgun"
-	"#str_107409"	"Rocket Launcher"	
-	"#str_107410"	"PP Restore" //PP Restore   WAS called: Shotgun
-	"#str_107411"	"Potion"    //Potion   WAS called: Clips
+	"#str_107409"	"Rocket Launcher (no damage)"	
+	"#str_107410"	"Shotgun"              //PP Restore   WAS called: Shotgun
+	"#str_107411"	"Potion"               //Potion   WAS called: Clips
 	"#str_107412"	"Nails"
 	"#str_107413"	"Slugs"
 	"#str_107414"	"Shells"
 	"#str_107415"	"Batteries"
 	"#str_107416"	"Rockets"
-	"#str_107417"	"Pokeballs" //Pokeballs  WAS called: Grenades
+	"#str_107417"	"Pokeballs"            //Pokeballs  WAS called: Grenades
 	"#str_107418"	"Lightning Coils"
 	"#str_107419"	"Dark Matter Cores"
 	"#str_107420"	"Item"
