@@ -1076,7 +1076,11 @@ void idAI::Event_AttackMelee( const char* meleeName ) {
 	if ( !meleeDict ) {
 		gameLocal.Error ( "missing meleeDef '%s' for ai entity '%s'", meleeName, GetName() );
 	}
-	AttackMelee ( meleeName, meleeDict ); 
+	//J START
+	if (turn) {
+		AttackMelee(meleeName, meleeDict);
+	}
+	turn = false;
 }
 
 /*

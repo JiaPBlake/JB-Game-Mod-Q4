@@ -756,6 +756,9 @@ public:
 	bool					CheckDeathCausesMissionFailure	( void );
 
 	// attacks
+	//J START
+	bool					turn;
+	//J END
 	virtual bool			Attack							( const char* attackName, jointHandle_t joint, idEntity* target, const idVec3& pushVelocity = vec3_origin );
 	virtual idProjectile*	AttackRanged					( const char* attackName, const idDict* attackDict, jointHandle_t joint, idEntity* target, const idVec3& pushVelocity = vec3_origin );
 	virtual idProjectile*	AttackProjectile				( const idDict* projectileDict, const idVec3 &org, const idAngles &ang );

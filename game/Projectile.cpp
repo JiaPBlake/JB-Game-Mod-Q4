@@ -897,7 +897,7 @@ bool idProjectile::Collide( const trace_t &collision, const idVec3 &velocity, bo
 						//projectileFlags.detonate_on_actor
 			bool turn = false;
 			int ranNum = rand() % 2;
-			gameLocal.Printf("\nPROJECTILE dmg EntDefName: %s is soon going to take damage. By PROJECTILE: '%s'\n", ent->GetEntityDefName(), this->GetEntityDefName());
+			//gameLocal.Printf("\nPROJECTILE dmg EntDefName: %s is soon going to take damage. By PROJECTILE: '%s'\n", ent->GetEntityDefName(), this->GetEntityDefName());
 //			if (turn){
 			//Don't need this anymore   idVec3 currentOri = ent->GetPhysics()->GetOrigin();
 			//Don't need this anymore   gameLocal.Printf("CurrentOrigin is a vector with x: '%d', y: '%d', z: '%d',\n", currentOri.x, currentOri.y, currentOri.z);
@@ -918,15 +918,26 @@ bool idProjectile::Collide( const trace_t &collision, const idVec3 &velocity, bo
 				//I wanna disect this line of code from the Friendly Fire section of Actor.cpp's Damage() function
 				//if (attacker->IsType(idActor::Type) && static_cast<idActor*>(attacker)->team == team) {
 				if ( ent->IsType(idActor::GetClassType()) ) {  //if the entity is an Actor, print that actor's team
-					static_cast<idActor*>(ent)->SetTeam(0);
-					gameLocal.Printf("This actor's (%s) team is now: %d\n", ent->GetEntityDefName(), static_cast<idActor*>(ent)->team);
+					//Let's try making it a chance of capture like Pokemon :D   we'll do a 30% chance.
+					int ranNum = rand() % 3;
+					gameLocal.Printf("ranNum is: %d\n", ranNum);
+					if (ranNum == 1) {
+						static_cast<idActor*>(ent)->SetTeam(0);
+						//good lord idk how to make them follow me.  idk why I can't just call an AI function on an Actor;
+						//idPlayer* player = gameLocal.GetLocalPlayer();
+						//static_cast<idActor*>(ent)->SetLeader(static_cast<idEntity*>(player));
+						gameLocal.Printf("This actor's (%s) team is now: %d\n", ent->GetEntityDefName(), static_cast<idActor*>(ent)->team);
+						//aiManager.AddTeammate(static_cast<idActor*>(ent));
+					}
 				}
 			}
-			
+		//I want the Nail gun to be my stat gun.  Just make things easier
+			// !!  New tech. Write that block in the Actor.cpp file so I have more access to the Actor's sepcific stats
+			// such as Health etc
 	
 			else {	//J END	
 				ent->Damage(this, owner, dir, damageDefName, damagePower, hitJoint);
-				gameLocal.Printf("Returned from PROJECTILES's ent->Damage() call. ent's DefClassName is: ' %s ' \n", ent->GetEntityDefClassName());
+				//gameLocal.Printf("Returned from PROJECTILES's ent->Damage() call. ent's DefClassName is: ' %s ' \n", ent->GetEntityDefClassName());
 			}
 
 			if (owner && owner->IsType(idPlayer::GetClassType()) && ent->IsType(idActor::GetClassType())) {

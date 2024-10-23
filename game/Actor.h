@@ -232,7 +232,7 @@ public:
 	void					OverrideAnim			( int channel );
 	bool					HasAnim					( int channel, const char *name, bool forcePrefix = false );
 	int						GetAnim					( int channel, const char *name, bool forcePrefix = false );
-	bool					AnimDone				( int channel, int blendFrames );
+	bool					AnimDone				( int channel, int blendFrames );				//J NOTE:   maybe turn here?
 	
 	// animation state control
 	void					UpdateAnimState			( void );
@@ -259,8 +259,13 @@ public:
 	int						lightningEffects;
 
 	//J START
+	idEntityPtr<idActor>	leader;
 	bool					turn;
+	bool					wasEnemy;
+	void					SetLeader				(idEntity* newLeader);
 	void					SwapTurn				(  );
+	bool					GetTurn					( );
+	void					SetTurn					( bool turnValue );
 	void					SetTeam					( int teamToSet );
 	//J END
 

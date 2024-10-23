@@ -1084,7 +1084,7 @@ idPlayer::idPlayer() {
 	doInitWeapon			= false;
 	noclip					= false;
 	//J START
-	turn					= false;
+	turn					= turn;
 	//J END
 	godmode					= false;
 	undying					= g_forceUndying.GetBool() ? !gameLocal.isMultiplayer : false;
@@ -3996,9 +3996,10 @@ void idPlayer::FireWeapon( void ) {
 			if (!noFireWhileSwitching) {
 				if (weapon->AmmoInClip() || weapon->AmmoAvailable()) {
 					pfl.attackHeld = true;
+//TURN IS HERE!!
 					if (turn) {
 					weapon->BeginAttack();
-					} //J END  NEED turn here. 
+					} //J END  NEED turn here for players to have turns. 
 				}
 				else {
 					pfl.attackHeld = false;
@@ -4028,7 +4029,7 @@ void idPlayer::FireWeapon( void ) {
 			}
 		*/
 		if (hud && weaponChangeIconsUp) {
-			//J NOTE -- if (turn) does nothing here.  As in, it also doesn't even show us our weapon. So the problem exists within Weapon's BeginAttack() function.
+			//J NOTE -- if (turn) does nothing here.  As in, it ALSO doesn't even show us our weapon. So the problem exists within Weapon's BeginAttack() function.
 			hud->HandleNamedEvent("weaponFire");
 			// nrausch: objectiveSystem does not necessarily exist (in mp it doesn't)
 			if (objectiveSystem) {
@@ -8433,8 +8434,9 @@ bool idPlayer::CanBuy( void ) {
 
 
 void idPlayer::GenerateImpulseForBuyAttempt( const char* itemName ) {
-	if ( !CanBuy() )
-		return;
+	//J START   ay bro I NEED to buy, man.
+	//if ( !CanBuy() )
+	//	return;
 
 	int itemBuyImpulse = GetItemBuyImpulse( itemName );
 	PerformImpulse( itemBuyImpulse );

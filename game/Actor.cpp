@@ -425,6 +425,8 @@ idActor::idActor( void )
 	modelOffset.Zero();
 
 	team				= 0;
+	//J START
+	//turn				= false;
 	rank				= 0;
 	fovDot				= 0.0f;
 	pain_debounce_time	= 0;
@@ -518,6 +520,9 @@ void idActor::Spawn( void ) {
 	idStr			jointName;
 	float			fovDegrees;
 	float			fovDegreesClose;
+
+	//J START
+	//turn = false;
 
 	animPrefix	= "";
 
@@ -2382,9 +2387,29 @@ calls Damage()
 void idActor::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &dir, 
 					  const char *damageDefName, const float damageScale, const int location ) {
 //J START
-	bool turn = false;
+	//  enemyList.Next()    enemyList is a list of characters that have targeted the player as their enemy
+
+	//	HOLY FISH PASTE IT WORKS PERFECTLY   ANDDD MOSNTERS I SPAWN IN HAVE THEIR OWN NUMBER!!
+//Printing Actor's stats if hit with a Nailgun bullet AND if I - the player - shoot them:
+	if ( idStr::Cmp(inflictor->GetEntityDefName(), "projectile_nail") == 0  && static_cast<idPlayer*>(attacker) == gameLocal.GetLocalPlayer()) {
+		gameLocal.Printf("\nNailgun shot detected. Printing Pokemon stats:\n\n");
+
+		//if (this->IsType(idActor::GetClassType()) && static_cast<idActor*>(ent)->team == 0) {  //if the entity is an Actor, and they're on my team (in my party)
+		// well.. if we're in this function, ofc we're going to be an actor.  So just check to make sure that
+		//What's being damaged  (THIS)  is on our team
+		if (attacker->IsType(idActor::Type) && static_cast<idActor*>(attacker)->team == team) {
+			gameLocal.Printf("This pokemon's ID is: `%d`\n \
+			Name: '%s'\n\
+			Health: %d\n", entityNumber, name.c_str(), this->health);             //figure out what to write to get the specific entity's ID number, if possible
+			//then print out its Health and whatever.  maayyyybe speed if i :melting: decide to create that stat
+
+		}
+
+	}
+	
+	//bool turn = false;
 	int ranNum = rand() % 2;
-	gameLocal.Printf("\nACTOR Dmg ; Actor %s is about to take damage. By: '%s'.  RanNum is: %d\n", this->GetEntityDefName(), inflictor->GetEntityDefName(), ranNum);
+	
 //J END
 	if ( !fl.takedamage ) {
 		return;
@@ -2416,8 +2441,10 @@ void idActor::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &dir
 //	GetPhysics()->SetOrigin(GetPhysics()->GetOrigin() + GetPhysics()->GetGravityNormal() * -300.0f);
 	//GetPhysics()->ApplyImpulse(0, center, -0.5f * GetPhysics()->GetMass() * MS2SEC(gameLocal.GetMSec()) * GetPhysics()->GetGravity());
 
-//	if (turn){ //this works I think.
+	if (!turn){ // if it's  NOT my turn. I want to take damage. Otherwise, if it's my turn I should be dishing OUT damage.
 //J END
+		gameLocal.Printf("\nACTOR Dmg ; Actor %s is about to take damage. By: '%s'.  RanNum is: %d\n", this->GetEntityDefName(), inflictor->GetEntityDefName(), ranNum);
+		gameLocal.Printf("It's NOT my turn so I'm taking damage\n");
 
 	damage = GetDamageForLocation( damage, location );
 
@@ -2566,13 +2593,33 @@ void idActor::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &dir
 	}
 
 
-//	} //J END Turn if
+	} //J END Turn if
+	//Once I've TAKEN damage.   It should be my turn.
+	if (!turn) {
+		gameLocal.Printf("I took damage. My turn is true now\n");
+		turn = true; //Look into the  CanHitEnemy  boolean function from  AI.h and AI.cpp
+	} //J END
 }
 
 //J START:
 
+void idActor::SetLeader(idEntity* newLeader) {
+	//idActor* entActor = this;
+	//I can't call AI.cpp's SetLeader function for some reason
+	leader = static_cast<idActor*>(newLeader);
+}
+
 void idActor::SwapTurn( ) {
 	turn = !turn;
+}
+
+bool idActor::GetTurn( ) {
+	return turn;
+}
+
+void idActor::SetTurn(bool turnValue) {
+	turn = turnValue;
+	gameLocal.Printf("Actor's Turn should be set to false in Actor\n");
 }
 
 void idActor::SetTeam( int teamToSet) {

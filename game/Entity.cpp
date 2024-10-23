@@ -645,6 +645,10 @@ void idEntity::Spawn( void ) {
 
 	InitDefaultPhysics( origin, axis );
 
+	//J START  -- yeah this crashes my game lmfao
+	//idPlayer* player = gameLocal.GetLocalPlayer();
+	//idVec3 newOr = player->GetPhysics()->GetOrigin();
+	//gameLocal.Printf("\nENTITY SPAWN FUNCTION!! PLAYER LOCATION IS: x: '%d', y: '%d', z: '%d',\n", newOr.x, newOr.y, newOr.z);
 	SetOrigin( origin );
 	SetAxis( axis );
 
@@ -3632,7 +3636,7 @@ inflictor, attacker, dir, and point can be NULL for environmental effects
 void idEntity::Damage( idEntity *inflictor, idEntity *attacker, const idVec3 &dir, 
 					  const char *damageDefName, const float damageScale, const int location ) {
 //J START
-	gameLocal.Printf("ENTITY Dmg ; Entity^ ('%s') is about to take damage FROM: '%s'\n", this->GetEntityDefName(), inflictor->GetEntityDefName());
+	//gameLocal.Printf("ENTITY Dmg ; Entity^ ('%s') is about to take damage FROM: '%s'\n", this->GetEntityDefName(), inflictor->GetEntityDefName());
 //J END
 	if ( forwardDamageEnt.IsValid() ) {
 		forwardDamageEnt->Damage( inflictor, attacker, dir, damageDefName, damageScale, location );

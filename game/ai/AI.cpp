@@ -2472,14 +2472,22 @@ bool idAI::Attack ( const char* attackName, jointHandle_t joint, idEntity* targe
 	if ( !attackDict ) {
 		gameLocal.Error ( "could not find attack entityDef 'def_attack_%s (%s)' on AI entity %s", attackName, spawnArgs.GetString ( va("def_attack_%s", attackName ) ), GetName ( ) );
 	}
+	//J START`
+	idActor* me = static_cast<idActor*>(this);
+	bool turnnn = me->GetTurn();
+	if (turnnn) {
+		gameLocal.Printf("\nIt's my turn. I am ATTACKING\n");
 
-	// Melee Attack?
-	if ( spawnArgs.GetBool ( va("attack_%s_melee", attackName ), "0" ) ) {
-		return AttackMelee ( attackName, attackDict );
-	}
+		// Melee Attack?
+		if (spawnArgs.GetBool(va("attack_%s_melee", attackName), "0")) {
+			return AttackMelee(attackName, attackDict);
+		}
 
-	// Ranged attack (hitscan or projectile)?
-	return ( AttackRanged ( attackName, attackDict, joint, target, pushVelocity ) != NULL );
+		// Ranged attack (hitscan or projectile)?
+		return (AttackRanged(attackName, attackDict, joint, target, pushVelocity) != NULL);
+	
+	} //J END
+	
 }
 
 /*
@@ -2512,6 +2520,13 @@ idProjectile* idAI::AttackRanged (
 	
 	lastProjectile		= NULL;
 	
+	//J START
+	/*idActor* me = static_cast<idActor*>(this);
+	me->SetTurn(false);
+	turn = false;
+	gameLocal.Printf("My turn is false now\n");*/
+	//J END
+
 	// Generic attack properties
 	attack_accuracy		= spawnArgs.GetFloat ( va("attack_%s_accuracy", attackName ), "7" );
 	attack_cone			= spawnArgs.GetFloat ( va("attack_%s_cone", attackName ), "75" );
@@ -2633,14 +2648,18 @@ idProjectile* idAI::AttackRanged (
 				CreateProjectile( attackDict, muzzleOrigin, dir );
 			}
 			lastProjectile = projectile.GetEntity();
+			gameLocal.Printf("LAUNCHING PROJECTILE  BECAUSE IT'S MY TURN\n");
 			lastProjectile->Launch( muzzleOrigin, dir, pushVelocity, 0.0f, combat.aggressiveScale );
-		
+			gameLocal.Printf("Returned from launch\n");
 			// Let the script manage projectiles if need be
 			ExecScriptFunction ( funcs.launch_projectile, lastProjectile );
 		
 			projectile = NULL;
 		}
 	}
+	idActor* me = static_cast<idActor*>(this);
+	me->SwapTurn();
+	gameLocal.Printf("Swapping turn\n");
 
 	lastAttackTime = gameLocal.time;
 
@@ -2781,6 +2800,13 @@ bool idAI::AttackMelee ( const char *attackName, const idDict* meleeDict ) {
 	const char*				p;
 	const idSoundShader*	shader;
 
+	//J START
+	/*idActor* me = static_cast<idActor*>(this);
+	me->SetTurn(false);
+	turn = false;
+	gameLocal.Printf("My turn is false now\n");*/
+	//J END
+
 	if ( !enemyEnt ) {
 		p = meleeDict->GetString( "snd_miss" );
 		if ( p && *p ) {
@@ -2858,6 +2884,7 @@ bool idAI::AttackMelee ( const char *attackName, const idDict* meleeDict ) {
 	if ( enemyEnt->IsType ( idAI::Type ) ) {
 		location = static_cast<idAI*>(enemyEnt)->chestOffsetJoint;
 	}
+	gameLocal.Printf("Doing the damage in MELEE bc it should be my turn\n");
 	enemyEnt->Damage( this, this, globalKickDir, meleeDict->GetString ( "classname" ), damageScale, location );
 
 	if ( meleeDict->GetString( "fx_impact", NULL ) ) {
@@ -2875,6 +2902,9 @@ bool idAI::AttackMelee ( const char *attackName, const idDict* meleeDict ) {
 	}
 
 	lastAttackTime = gameLocal.time;
+	idActor* me = static_cast<idActor*>(this);
+	me->SwapTurn();
+	gameLocal.Printf("Swapping turn\n");
 
 	return true;
 }
