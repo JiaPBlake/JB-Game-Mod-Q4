@@ -2486,7 +2486,7 @@ bool idAI::Attack ( const char* attackName, jointHandle_t joint, idEntity* targe
 		// Ranged attack (hitscan or projectile)?
 		return (AttackRanged(attackName, attackDict, joint, target, pushVelocity) != NULL);
 	
-	} //J END
+	} //J END   Swapping it within these 2 seems to work fine.   I think Setting it to False explicitly is what fucked with it and caused them to never have a turn again
 	
 }
 

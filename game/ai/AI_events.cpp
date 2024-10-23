@@ -1077,10 +1077,14 @@ void idAI::Event_AttackMelee( const char* meleeName ) {
 		gameLocal.Error ( "missing meleeDef '%s' for ai entity '%s'", meleeName, GetName() );
 	}
 	//J START
-	if (turn) {
+	idActor* me = static_cast<idActor*>(this);
+	bool turnnn = me->GetTurn();
+	if (turnnn) {
 		AttackMelee(meleeName, meleeDict);
 	}
-	turn = false;
+	//I have to EXPLICITLY set it to false here as opposed to Swapping it.
+	me->SetTurn(false);
+	gameLocal.Printf("Turn set to False in AI_events\n");
 }
 
 /*
