@@ -15,5 +15,6 @@ Within your mod folder, you will need:
 
 Now that your mod folder is setup, and you have built the q4sdk.sln solution in Visual Studio (With the above mentioned settings), you should have the **Gamex86.dll file** in you Win32 folder. Open the game000.pk4 file with 7-zip, and place the Gamex86.dll file into the game000.pk4 file using 7-zip. Close the 7-zip window, and your mod should be good to go!
 
+(Note:   The Multiplayer tab on the main menu is a Help screen!  For some reason.. the How to Play text just isn't showing up.. I think it's a layering issue)
 
 
