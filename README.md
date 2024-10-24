@@ -17,4 +17,9 @@ Now that your mod folder is setup, and you have built the q4sdk.sln solution in 
 
 (Note:   The Multiplayer tab on the main menu is a Help screen!  For some reason.. the How to Play text just isn't showing up.. I think it's a layering issue)
 
-
+Personal Deliverables List:
+- Turn-based combat             ✔
+- Ability to capture monsters   ✔
+- item collection  (5)          ✔
+- 10 attacks for the monsters  (in total)  4 per monster
+- Pokecenter to heal and buy things
