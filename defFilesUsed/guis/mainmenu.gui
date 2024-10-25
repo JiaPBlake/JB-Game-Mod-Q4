@@ -916,9 +916,10 @@ windowDef Desktop
 				rect	44,274,314,23
 				visible	1
 				forecolor	1,1,1,0.8
-				text	"How to Play"
+				text	"How to Play!"
 				textscale	0.37
-				font	"fonts/marine"
+				font	"fonts/r_strogg"
+				backcolor	0.501,0.250,0,1
 			}
 			windowDef main_t_b4
 			{
@@ -1139,7 +1140,7 @@ windowDef Desktop
 				rect	239,181,345,139
 				visible	1
 				forecolor	1,1,1,0.6
-				text	"#str_200019"
+				text	"Your pokemon journey begins"
 				textscale	0.25
 				font	"fonts/lowpixel"
 			}
@@ -1941,11 +1942,11 @@ windowDef Desktop
 			}
 			windowDef mp_t_b4
 			{
-				rect	44,272,500,23
+				rect	44,274,500,23
 				visible	1
 				forecolor	1,1,1,0.8
 				text	"Start firin' Pokeballs at some monsters! Gotta catch 'em all!"
-				textscale	0.26
+				textscale	0.21
 				font	"fonts/marine"
 			}
 			windowDef mp_b1_corner

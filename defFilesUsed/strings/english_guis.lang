@@ -5,7 +5,7 @@
 {
 	"#str_200000"	"NEW GAME"
 	"#str_200001"	"LOAD GAME"
-	"#str_200002"	"MULTIPLAYER"
+	"#str_200002"	"HOW TO PLAY!"
 	"#str_200003"	"SAVE GAME"
 	"#str_200004"	"QUIT CURRENT GAME"
 	"#str_200005"	"RETURN TO GAME"
